@@ -2,6 +2,8 @@ from py2neo import Graph, Node, Relationship, cypher, Path
 import neo4j
 class Neo4j():
 	graph = None
+	#所有的关系类型
+	alltype = ['mocn', 'con', 'pre', 'apre', 'opre',]
 	def __init__(self):
 		print("create neo4j class ...")
 
@@ -13,6 +15,13 @@ class Neo4j():
 	#    ……
 	# ]
 
+	#根据章节id确定标签之后，找出所有该标签下的所有节点
+	def getAllnodeByCpId(self, cp_id):
+		label = "C" + str(cp_id) + "_NODE"
+		sql = "MATCH (n:" + label + ") return n;"
+		answer = self.graph.run(sql).data()
+		return answer
+
 	#根据章节id确定标签之后，找出所有叶子结点
 	def getLeafByCpId(self, cp_id):
 		label = "C"+str(cp_id)+"_NODE"
@@ -20,14 +29,29 @@ class Neo4j():
 		answer = self.graph.run(sql).data()
 		return answer
 
-	#根据章节id确定标签之后，找出所有含mcon关系的结点
-	def getMconByCpId(self, cp_id):
-		label = "C" + str(cp_id) + "_NODE"
-		sql = "MATCH (n1:C1_NODE)-[:RELATION {type:'mcon'}] -> (n2:C1_NODE) RETURN n1;"
+	#找到左节点的mcon的所有右节点
+	def getMconByNodeid(self, nid):
+		sql = "MATCH (n1:{num:"+nid+"} -[:RELATION {type:'mcon'}] -> n) RETURN n"
 		answer = self.graph.run(sql).data()
 		return answer
 
-	def matchItembyTitle(self,value):
+	#根据章节id确定标签之后，找出所有含mcon关系的结点
+	def getMconByCpId(self, cp_id):
+		label = "C" + str(cp_id) + "_NODE"
+		sql = "MATCH (n:"+label+")-[:RELATION {type:'mcon'}] -> (n2:"+label+") RETURN n;"
+		answer = self.graph.run(sql).data()
+		return answer
+
+	# 根据右节点的id和关系找到左节点的nodeid
+	def getLIDByReaAndRId(self, rtype, rid):
+		if rtype not in self.alltype:
+			return None
+		else:
+			sql = "MATCH (n)-[:RELATION {type:'"+rtype+"'}] -> (n2:{num:"+rid+"}) RETURN n;"
+			answer = self.graph.run(sql).data()
+			return answer
+
+	def matchItembyTitle(self, value):
 		sql = "MATCH (n:Item { title: '" + str(value) + "' }) return n;"
 		answer = self.graph.run(sql).data()
 		return answer

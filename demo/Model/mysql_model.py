@@ -15,6 +15,7 @@ class MysqlClass():
             charset ="utf8"
         )
         self.cursor = self.conn.cursor()
+
     def selectQbyCpid(self,cp_id):
         sql = "SELECT id,node_id,cp_id,q_stem,choice,answer FROM ques WHERE cp_id=%s" % cp_id
         self.cursor.execute(sql)
