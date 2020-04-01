@@ -74,10 +74,18 @@ WSGI_APPLICATION = 'demo.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',   # 数据库引擎
+    #     'NAME': 'math_question',  # 数据库名，先前创建的
+    #     'USER': 'root',     # 用户名，可以自己创建用户
+    #     'PASSWORD': 'mysql',  # 密码
+    #     'HOST': '127.0.0.1',  # mysql服务所在的主机ip
+    #     'PORT': '3306',         # mysql服务端口
+    # }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # },
 }
 
 

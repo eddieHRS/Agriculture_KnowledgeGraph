@@ -1,0 +1,46 @@
+{% extends "mybase.html" %} {% block mainbody %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <!--overview start-->
+            <div class="row">
+                <div class="col-md-12">
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="\">Home</a></li>
+                        <li> {{ chapter }} </li>
+                    </ol>
+                </div>
+            </div>
+
+
+            <!--collapse start-->
+            <div class="form-group col-md-2">题目:</div>
+            <div class="form-group col-md-12">
+                这是题速度发的反正是为安慰人为安慰人违法阿尔时代发生的发发速度噶速度撒旦发生的发 啊时代发生的发
+            </div>
+            <div class="form-group col-md-2">选项:</div>
+            <div class="form-group col-md-12">
+                这是选项是题速度发的反正是为安慰人为安慰
+            </div>
+            <div class="form-group col-md-2">答案</div>
+            <div class="form-group col-md-12">
+                <form action="test/next_q" method="POST"></form>
+                <input type="text" name="ans" placeholder="输入答案">
+                <input type="hidden" name="q_id" value="{{ q_id }}">
+                <input type="submit" value="next">
+            </div>
+            <div class="form-group col-md-2">本题考察的知识点:</div>
+            <div class="form-group col-md-12">
+                asusuhdasdh
+            </div>
+
+            <!--collapse end-->
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

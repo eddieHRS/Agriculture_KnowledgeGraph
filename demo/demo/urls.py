@@ -5,6 +5,7 @@ from . import _404_view, overview_view
 from . import relation_view
 from . import tagging
 from . import question_answering, decisions_making
+from . import test
 
 urlpatterns = [
     url(r'^$', index_view.index),
@@ -18,6 +19,7 @@ urlpatterns = [
     url(r'^tagging',tagging.tagging),
     url(r'^search_relation',relation_view.search_relation),
     url(r'^qa', question_answering.question_answering),
-    url(r'^decision', decisions_making.decisions_making)
+    url(r'^decision', decisions_making.decisions_making),
+    url(r'^test', test.test) #测试的函数
     
 ]

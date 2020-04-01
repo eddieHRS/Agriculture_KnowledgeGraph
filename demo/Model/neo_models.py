@@ -6,10 +6,28 @@ class Neo4j():
 		print("create neo4j class ...")
 
 	def connectDB(self):
-		self.graph = Graph("http://localhost:7474", username="neo4j", password="123456")
+		self.graph = Graph("http://localhost:7474", username="neo4j", password="980127")
+	#answer的格式
+	#[
+	# 	{'id':'','title':'','detail':''},
+	#    ……
+	# ]
+
+	#根据章节id确定标签之后，找出所有叶子结点
+	def getLeafByCpId(self, cp_id):
+		label = "C"+str(cp_id)+"_NODE"
+		sql = "MATCH (n:" + label + ") where not (n)-->() return n;"
+		answer = self.graph.run(sql).data()
+		return answer
+
+	#根据章节id确定标签之后，找出所有含mcon关系的结点
+	def getMconByCpId(self, cp_id):
+		label = "C" + str(cp_id) + "_NODE"
+		sql = "MATCH (n1:C1_NODE)-[:RELATION {type:'mcon'}] -> (n2:C1_NODE) RETURN n1;"
+		answer = self.graph.run(sql).data()
+		return answer
 
 	def matchItembyTitle(self,value):
-
 		sql = "MATCH (n:Item { title: '" + str(value) + "' }) return n;"
 		answer = self.graph.run(sql).data()
 		return answer
