@@ -28,13 +28,19 @@ def test(request):
 
 #接收前端返回的题目id和答案，更新数据
 def receive_update(request):
-    node_id = request.POST['node_id']
-    question_id = request.POST['q_id']
-    answer = request.POST['ans']
+    node_id = request.GET['node_id']
+    question_id = request.GET['q_id']
+    answer = request.GET['ans']
+    print("receive_update的数据:node_id,q_id,ans")
+    print(node_id, question_id, answer)
     global t
     t.updateStatus(node_id, question_id, answer)
     data = t.getQues()
+    print("getQues in receive_update:")
+    print(data)
     if data is None:
-        return render(request, "testresult.html", t.getData())
+        # t.check_mcon()#所有能测试的题目全部测试完，需要对mcon更新
+        print(t.getnodesAndEdges())
+        return render(request, "testresult.html", {'ret': json.dumps(t.getnodesAndEdges())})
     else:
         return render(request, "mytest.html", data)

@@ -3,7 +3,7 @@ from . import index_view,index_ERform_view,detail_view
 from . import tagging_data_view,tagging_data_writefile_view
 from . import _404_view, overview_view
 from . import relation_view
-from . import tagging
+from . import tagging, pic
 from . import question_answering, decisions_making
 from . import test
 
@@ -20,6 +20,9 @@ urlpatterns = [
     url(r'^search_relation',relation_view.search_relation),
     url(r'^qa', question_answering.question_answering),
     url(r'^decision', decisions_making.decisions_making),
-    url(r'^test', test.test) #测试的函数
-    
+    url(r'^test/test/$', test.test, name='mytest'), #测试的函数
+    url(r'^test/receive_update/$', test.receive_update), #测试的函数
+    url(r'^pic', pic.pic),
+
+
 ]

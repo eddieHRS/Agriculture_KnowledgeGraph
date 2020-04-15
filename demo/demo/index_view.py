@@ -7,7 +7,7 @@ from django.views.decorators import csrf
 def index(request):  # index页面需要一开始就加载的内容写在这里
 	context = {
 				"chapter": "有理数",
-				"q_id": "",
+				"cp_id": "",
 	}
 	return render(request, 'mytest.html', context)
 	

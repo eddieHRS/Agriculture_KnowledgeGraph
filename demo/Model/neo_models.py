@@ -14,7 +14,12 @@ class Neo4j():
 	# 	{'id':'','title':'','detail':''},
 	#    ……
 	# ]
-
+	#根据关系找到该关系下所有的二元组
+	def findNodeByRea(self, rea, cp_id):
+		label = "C" + str(cp_id) + "_NODE"
+		sql = "MATCH (n1:"+label+")-[r:RELATION{type:'"+rea+"'}]->(n2:"+label+") return n1.num,n2.num;"
+		answer = self.graph.run(sql).data()
+		return answer
 	#根据章节id确定标签之后，找出所有该标签下的所有节点
 	def getAllnodeByCpId(self, cp_id):
 		label = "C" + str(cp_id) + "_NODE"
@@ -31,7 +36,7 @@ class Neo4j():
 
 	#找到左节点的mcon的所有右节点
 	def getMconByNodeid(self, nid):
-		sql = "MATCH (n1:{num:"+nid+"} -[:RELATION {type:'mcon'}] -> n) RETURN n"
+		sql = "MATCH ((n1) -[:RELATION {type:'mcon'}] -> (n)) WHERE n1.num = '"+nid+"'RETURN n;"
 		answer = self.graph.run(sql).data()
 		return answer
 
@@ -47,7 +52,8 @@ class Neo4j():
 		if rtype not in self.alltype:
 			return None
 		else:
-			sql = "MATCH (n)-[:RELATION {type:'"+rtype+"'}] -> (n2:{num:"+rid+"}) RETURN n;"
+			sql = "MATCH (n)-[:RELATION {type:'"+rtype+"'}] -> (n2) " \
+				  "WHERE n2.num= '" +rid+ "' RETURN n;"
 			answer = self.graph.run(sql).data()
 			return answer
 

@@ -1,7 +1,6 @@
 {% extends "mybase.html" %} {% block mainbody %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.14.1/cytoscape.min.js"></script>
-<script src="/static/js/cytoscape-euler.js"></script>
-    <div>
+<div>
     <section class="panel panel-default">
         <header class="panel-heading">诊断结果显示：</header>
         <div class="panel-body">
@@ -9,57 +8,57 @@
         </div>
     </section>
 </div>
+
 <script type="text/javascript">
-    var ret_dict = {{ret|safe}};
-    console.log(ret_dict['nodes']);
     cytoscape({
     container: document.getElementById('cy'),
     elements: {
-        nodes: ret_dict['nodes'],
-        edges: ret_dict['edges']
+        nodes: [
+          {data: { num: '71001', titile:'有理数' ,}},
+
+            {}
+        ],
+
+
+
+        edges: [
+          {data: { id: 'ab', source: 'a', target: 'b' }}
+        ]
   	},
+
   	layout: {
-        name: 'euler',
-        randomize: true,
-        animate: false
-						// some more options here...
-    },
+    	name: 'grid',
+    	rows: 1
+  	},
+
+
   	style: [
   		{
-	      	selector: 'node[type="corr_node"]',
+	      	selector: 'a_node',
 	      	style: {
-		        'background-color': 'green',
-		        'label': 'data(title)'
+		        'background-color': '#666',
+		        'label': 'data(id)'
       		}
     	},
         {
-	      	selector: 'node[type="wron_node"]',
+	      	selector: 'b_node',
 	      	style: {
-		        'background-color': 'red',
-		        'label': 'data(title)'
-      		}
-    	},
-        {
-	      	selector: 'node[type="unknown_node"]',
-	      	style: {
-		        'background-color': 'blue',
-		        'label': 'data(title)'
+		        'background-color': '#777',
+		        'label': 'data(id)'
       		}
     	},
 
 	    {
 	      selector: 'edge',
 	      style: {
-	        'width': 4,
-	        'line-color': 'blue',
+	        'width': 3,
+	        'line-color': '#ccc',
 	        'target-arrow-color': '#ccc',
 	        'target-arrow-shape': 'triangle'
 	      }
     	}
   	]
 });
-
-
 
 </script>
 
